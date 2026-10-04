@@ -334,11 +334,10 @@ class SistemLab:
             print(f"- {alat.kode_alat} | {alat.nama_alat}")
 
         kode = input("\nKode alat: ")
-        kondisi = input(
-            "Kondisi alat (baik/rusak/hilang): "
-        ).lower()
-
-        if kondisi not in ["baik", "rusak", "hilang"]:
+        kondisi = input("Kondisi alat (baik/rusak ringan/rusak berat): "
+                        ).lower()
+        
+        if kondisi not in ["baik", "rusak ringan", "rusak berat"]:
             print("Kondisi tidak valid.")
             return
 
