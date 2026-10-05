@@ -1,4 +1,4 @@
-from .transaksi import Transaksi
+from transaksi import Transaksi
 
 
 class DaftarTransaksi:
