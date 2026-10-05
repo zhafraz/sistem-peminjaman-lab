@@ -5,7 +5,7 @@ PeralatanMultimedia
 )
 
 class DaftarPeralatan:
-    def init (self):
+    def __init__(self):
         self.data = {}
 
 def tambah(self, kategori, kode, nama):

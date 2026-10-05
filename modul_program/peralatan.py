@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 
 class Peralatan(ABC):
-    def init (self, kode_alat, nama_alat):
+   def __init__(self, kode_alat, nama_alat):
         self.kode_alat = kode_alat
         self.nama_alat = nama_alat
         self.kondisi = "baik"
