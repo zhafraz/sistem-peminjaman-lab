@@ -1,10 +1,14 @@
-from transaksi import Transaksi
+from .transaksi import Transaksi
 
 
 class DaftarTransaksi:
     def __init__(self):
+        # dictionary: menyimpan data transaksi (key = id_transaksi, value = objek Transaksi)
         self.__data = {}
         self.__nomor_terakhir = 0
+
+    def cari_by_id(self, id_transaksi):
+        return self.__data.get(id_transaksi)
 
     def buat_transaksi(self, mahasiswa, daftar_alat):
         if not mahasiswa.bisa_meminjam():
@@ -13,6 +17,9 @@ class DaftarTransaksi:
 
         self.__nomor_terakhir += 1
         id_transaksi = f"TR{self.__nomor_terakhir:03d}"
+
+        for alat in daftar_alat:
+            alat.dipinjam()
 
         transaksi_baru = Transaksi(id_transaksi, mahasiswa, daftar_alat)
 
@@ -40,7 +47,7 @@ class DaftarTransaksi:
             print("Gagal: Alat tidak ditemukan dalam transaksi.")
             return False
 
-        if not transaksi.alat_belum_kembali():
+        if len(transaksi.alat_belum_kembali()) == 0:
             transaksi.status = "Selesai"
             transaksi.mahasiswa.selesai_transaksi(transaksi)
 
@@ -49,6 +56,7 @@ class DaftarTransaksi:
         return True
 
     def cari_by_mahasiswa(self, nim):
+        # list: menyimpan hasil pencarian transaksi milik mahasiswa tertentu berdasarkan NIM
         hasil = []
 
         for transaksi in self.__data.values():
