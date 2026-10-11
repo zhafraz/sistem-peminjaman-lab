@@ -1,6 +1,12 @@
-from daftar_mahasiswa import DaftarMahasiswa
-from daftar_peralatan import DaftarPeralatan
-from daftar_transaksi import DaftarTransaksi
+import sys
+import os
+
+# Menambahkan direktori utama ke sys.path
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+
+from modul_program.daftar_mahasiswa import DaftarMahasiswa
+from modul_program.daftar_peralatan import DaftarPeralatan
+from modul_program.daftar_transaksi import DaftarTransaksi
 
 
 class SistemLab:
@@ -8,11 +14,8 @@ class SistemLab:
         self.daftar_mahasiswa = DaftarMahasiswa()
         self.daftar_peralatan = DaftarPeralatan()
         self.daftar_transaksi = DaftarTransaksi()
+        # list: menyimpan riwayat string log aktivitas sistem
         self.log_aktivitas = []
-
-    # =========================
-    # METHOD 
-    # =========================
 
     def jalankan(self):
         """Menjalankan program utama."""
@@ -58,7 +61,7 @@ class SistemLab:
         print("0. Keluar")
         print("=" * 50)
 
-    def catat_log(self, pesan: str):
+    def catat_log(self, pesan):
         self.log_aktivitas.append(pesan)
 
     def tampilkan_log(self):
@@ -70,10 +73,6 @@ class SistemLab:
 
         for i, log in enumerate(self.log_aktivitas, start=1):
             print(f"{i}. {log}")
-
-    # =========================
-    # UI MAHASISWA
-    # =========================
 
     def menu_mahasiswa(self):
         while True:
@@ -94,9 +93,6 @@ class SistemLab:
 
                 if self.daftar_mahasiswa.tambah(nim, nama, no_hp):
                     self.catat_log(f"Menambah mahasiswa {nim}")
-                    print("Mahasiswa berhasil ditambahkan.")
-                else:
-                    print("Gagal menambahkan mahasiswa.")
 
             elif pilihan == "2":
                 nim = input("NIM       : ")
@@ -105,18 +101,12 @@ class SistemLab:
 
                 if self.daftar_mahasiswa.edit(nim, nama, no_hp):
                     self.catat_log(f"Mengubah data mahasiswa {nim}")
-                    print("Data mahasiswa berhasil diubah.")
-                else:
-                    print("Mahasiswa tidak ditemukan.")
 
             elif pilihan == "3":
                 nim = input("NIM yang akan dihapus: ")
 
                 if self.daftar_mahasiswa.hapus(nim):
                     self.catat_log(f"Menghapus mahasiswa {nim}")
-                    print("Mahasiswa berhasil dihapus.")
-                else:
-                    print("Gagal menghapus mahasiswa.")
 
             elif pilihan == "4":
                 nim = input("NIM: ")
@@ -135,10 +125,6 @@ class SistemLab:
 
             else:
                 print("Pilihan tidak valid.")
-
-    # =========================
-    # UI PERALATAN
-    # =========================
 
     def menu_peralatan(self):
         while True:
@@ -166,9 +152,6 @@ class SistemLab:
 
                 if self.daftar_peralatan.tambah(kategori, kode, nama):
                     self.catat_log(f"Menambah peralatan {kode}")
-                    print("Peralatan berhasil ditambahkan.")
-                else:
-                    print("Gagal menambahkan peralatan.")
 
             elif pilihan == "2":
                 kode = input("Kode alat : ")
@@ -176,18 +159,12 @@ class SistemLab:
 
                 if self.daftar_peralatan.edit(kode, nama):
                     self.catat_log(f"Mengubah peralatan {kode}")
-                    print("Peralatan berhasil diubah.")
-                else:
-                    print("Peralatan tidak ditemukan.")
 
             elif pilihan == "3":
                 kode = input("Kode alat yang akan dihapus: ")
 
                 if self.daftar_peralatan.hapus(kode):
                     self.catat_log(f"Menghapus peralatan {kode}")
-                    print("Peralatan berhasil dihapus.")
-                else:
-                    print("Gagal menghapus peralatan.")
 
             elif pilihan == "4":
                 kode = input("Kode alat: ")
@@ -254,10 +231,6 @@ class SistemLab:
             else:
                 print("Pilihan tidak valid.")
 
-    # =========================
-    # UI PEMINJAMAN
-    # =========================
-
     def menu_peminjaman(self):
         print("\n=== PEMINJAMAN PERALATAN ===")
 
@@ -278,12 +251,14 @@ class SistemLab:
             "Masukkan kode alat (pisahkan dengan koma): "
         )
 
-        kode_list = [
-            kode.strip()
-            for kode in kode_input.split(",")
-            if kode.strip()
-        ]
+        # list: menyimpan daftar string kode alat yang dipisahkan dari input pengguna
+        kode_list = []
+        for kode in kode_input.split(","):
+            kode_bersih = kode.strip()
+            if kode_bersih != "":
+                kode_list.append(kode_bersih)
 
+        # list: menyimpan kumpulan objek Peralatan yang akan dipinjam
         daftar_alat = []
 
         for kode in kode_list:
@@ -313,16 +288,12 @@ class SistemLab:
         else:
             print("Peminjaman gagal.")
 
-    # =========================
-    # UI PENGEMBALIAN
-    # =========================
-
     def menu_pengembalian(self):
         print("\n=== PENGEMBALIAN PERALATAN ===")
 
         id_transaksi = input("ID transaksi: ")
 
-        transaksi = self.daftar_transaksi.data.get(id_transaksi)
+        transaksi = self.daftar_transaksi.cari_by_id(id_transaksi)
 
         if transaksi is None:
             print("Transaksi tidak ditemukan.")
@@ -354,11 +325,6 @@ class SistemLab:
             print("Pengembalian berhasil.")
         else:
             print("Pengembalian gagal.")
-
-
-# =========================
-# PROGRAM UTAMA / UI
-# =========================
 
 if __name__ == "__main__":
     sistem = SistemLab()
