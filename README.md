@@ -23,21 +23,21 @@ Berikut adalah struktur folder dan penjelasan masing-masing berkas dalam proyek:
 ```text
 sistem-peminjaman-lab/
 │
-├── main.py                     # Entry point & pengendali antarmuka CLI (Class SistemLab)
-├── README.md                   # Dokumentasi proyek, struktur berkas, dan anggota kelompok
+├── main.py                     
+├── README.md                   
 │
-├── modul_program/              # Package modul inti logika bisnis dan OOP
-│   ├── __init__.py             # Inisialisasi package Python
-│   ├── mahasiswa.py            # Model entitas Mahasiswa (data peminjam & kuota transaksi aktif)
-│   ├── peralatan.py            # Abstract Base Class Peralatan & subclass spesifik kategori
-│   ├── transaksi.py            # Model entitas Transaksi peminjaman & nota peminjaman
-│   ├── daftar_mahasiswa.py     # Koleksi & manajemen data mahasiswa (CRUD)
-│   ├── daftar_peralatan.py     # Koleksi & inventarisasi peralatan laboratorium
-│   └── daftar_transaksi.py     # Manajemen pembuatan transaksi, pengembalian & riwayat
+├── modul_program/              
+│   ├── __init__.py             
+│   ├── mahasiswa.py            
+│   ├── peralatan.py            
+│   ├── transaksi.py            
+│   ├── daftar_mahasiswa.py     
+│   ├── daftar_peralatan.py     
+│   └── daftar_transaksi.py     
 │
-└── dokumentasi/                # Berkas pendukung dan diagram perancangan sistem
-    ├── diagram-class.png       # Rancangan awal Class Diagram
-    └── UML_Class_Diagram_Revisi.png # Revisi Diagram Kelas UML final
+└── dokumentasi/                
+    ├── diagram-class.png       
+    └── UML_Class_Diagram_Revisi.png 
 ```
 
 ---
